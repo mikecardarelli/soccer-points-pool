@@ -61,7 +61,8 @@
     </ul>
 
   <h2>All-Time Standings</h2>
-  <p class="chart-hint">Hover a line or legend name to highlight. Click to lock the selection, and click again to release.</p>
+  <h3>Combined Historical Rankings</h3>
+  <p class="chart-hint">Hover a line or legend name to highlight. Click to lock the selection — click again to release.</p>
 
   <div class="chart-wrapper">
     <div class="chart-container">
@@ -73,43 +74,43 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script>
   (function () {
-    const SEASONS = ["'18-19","'19-20","'20-21","'21-22","'22-23","'23-24","'24-25","'25-26"];
+    const SEASONS = ["'21-22","'22-23","'23-24","'24-25","'25-26"];
 
     const TIER1 = [
-      { name: 'Ted A.',        avg: 4.8,  ranks: [null,null,null,null,3,7,5,4] },
-      { name: 'Tom D.',        avg: 5.4,  ranks: [null,null,null,4,6,6,1,10] },
-      { name: 'Andy M.',       avg: 6.0,  ranks: [1,8,2,1,2,11,16,7] },
-      { name: 'Sam W.',        avg: 8.0,  ranks: [null,null,null,null,null,19,2,3] },
-      { name: 'Chris J.',      avg: 8.0,  ranks: [3,5,14,10,19,1,7,5] },
-      { name: 'M. Cardarelli', avg: 8.1,  ranks: [12,9,19,5,7,4,3,6] },
-      { name: 'Omar Z.',       avg: 9.3,  ranks: [4,6,7,3,1,9,28,16] },
-      { name: 'Jay M.',        avg: 9.9,  ranks: [6,3,1,2,13,28,15,11] },
-      { name: 'Seamus H.',     avg: 10.2, ranks: [null,null,11,26,14,3,6,1] },
-      { name: 'Neil D.',       avg: 10.5, ranks: [7,7,20,18,9,17,4,2] },
-      { name: 'M. Carter',     avg: 10.5, ranks: [11,1,5,11,17,5,9,25] },
-      { name: 'Moacir DSP',    avg: 12.2, ranks: [null,null,15,9,15,2,10,22] },
-      { name: 'George M.',     avg: 12.8, ranks: [9,4,16,6,5,12,26,24] },
+      { name: 'Ted A.',        avg: 4.8,  ranks: [null,3,7,5,4] },
+      { name: 'M. Cardarelli', avg: 5.0,  ranks: [5,7,4,3,6] },
+      { name: 'Tom D.',        avg: 5.4,  ranks: [4,6,6,1,10] },
+      { name: 'Andy M.',       avg: 7.4,  ranks: [1,2,11,16,7] },
+      { name: 'Sam W.',        avg: 8.0,  ranks: [null,null,19,2,3] },
+      { name: 'Chris J.',      avg: 8.4,  ranks: [10,19,1,7,5] },
+      { name: 'Seamus H.',     avg: 10.0, ranks: [26,14,3,6,1] },
+      { name: 'Neil D.',       avg: 10.0, ranks: [18,9,17,4,2] },
+      { name: 'Omar Z.',       avg: 11.4, ranks: [3,1,9,28,16] },
+      { name: 'Moacir DSP',    avg: 11.6, ranks: [9,15,2,10,22] },
+      { name: 'Pete B.',       avg: 13.2, ranks: [13,18,8,14,13] },
+      { name: 'M. Carter',     avg: 13.4, ranks: [11,17,5,9,25] },
+      { name: 'Jay M.',        avg: 13.8, ranks: [2,13,28,15,11] },
     ];
 
     const TIER2 = [
-      { name: 'Pete B.',      avg: 13.4, ranks: [10,13,18,13,18,8,14,13] },
-      { name: 'JD',           avg: 13.8, ranks: [null,null,10,14,10,23,18,8] },
-      { name: 'Cullen B.',    avg: 15.0, ranks: [null,null,13,19,8,null,null,20] },
-      { name: 'Ben D.',       avg: 18.3, ranks: [null,null,null,null,null,26,17,12] },
-      { name: 'Mzati K.',     avg: 18.6, ranks: [null,null,null,8,27,30,19,9] },
-      { name: 'Mike R.',      avg: 18.7, ranks: [null,null,21,29,24,15,8,15] },
-      { name: 'Karl J.',      avg: 19.0, ranks: [null,null,null,null,null,16,12,29] },
-      { name: 'Greg C.',      avg: 19.3, ranks: [null,null,null,null,null,22,22,14] },
-      { name: 'Matt C.',      avg: 19.4, ranks: [null,null,null,24,22,14,11,26] },
-      { name: 'Joris R.',     avg: 19.5, ranks: [13,10,8,22,31,27,27,18] },
-      { name: 'Chris S.',     avg: 19.5, ranks: [null,null,9,28,16,13,30,21] },
-      { name: 'Kevin L.',     avg: 22.2, ranks: [null,null,null,20,28,20,20,23] },
-      { name: 'Alex FS',      avg: 22.5, ranks: [null,null,17,12,26,29,24,27] },
-      { name: 'Christina K.', avg: 23.0, ranks: [null,null,23,27,25,21,25,17] },
-      { name: 'Dave N.',      avg: 24.2, ranks: [null,null,null,31,23,25,23,19] },
-      { name: 'Ted H.',       avg: 26.6, ranks: [null,null,null,30,21,31,21,30] },
-      { name: 'Andy H.',      avg: 28.0, ranks: [null,null,null,null,null,null,null,28] },
-      { name: 'Aaron Z.',     avg: 31.0, ranks: [null,null,null,null,null,null,null,31] },
+      { name: 'George M.',    avg: 14.6, ranks: [6,5,12,26,24] },
+      { name: 'JD',           avg: 14.6, ranks: [14,10,23,18,8] },
+      { name: 'Cullen B.',    avg: 15.7, ranks: [19,8,null,null,20] },
+      { name: 'Mike R.',      avg: 18.2, ranks: [29,24,15,8,15] },
+      { name: 'Ben D.',       avg: 18.3, ranks: [null,null,26,17,12] },
+      { name: 'Mzati K.',     avg: 18.6, ranks: [8,27,30,19,9] },
+      { name: 'Karl J.',      avg: 19.0, ranks: [null,null,16,12,29] },
+      { name: 'Greg C.',      avg: 19.3, ranks: [null,null,22,22,14] },
+      { name: 'Matt C.',      avg: 19.4, ranks: [24,22,14,11,26] },
+      { name: 'Chris S.',     avg: 21.6, ranks: [28,16,13,30,21] },
+      { name: 'Kevin L.',     avg: 22.2, ranks: [20,28,20,20,23] },
+      { name: 'Christina K.', avg: 23.0, ranks: [27,25,21,25,17] },
+      { name: 'Alex FS',      avg: 23.6, ranks: [12,26,29,24,27] },
+      { name: 'Dave N.',      avg: 24.2, ranks: [31,23,25,23,19] },
+      { name: 'Joris R.',     avg: 25.0, ranks: [22,31,27,27,18] },
+      { name: 'Ted H.',       avg: 26.6, ranks: [30,21,31,21,30] },
+      { name: 'Andy H.',      avg: 28.0, ranks: [null,null,null,null,28] },
+      { name: 'Aaron Z.',     avg: 31.0, ranks: [null,null,null,null,31] },
     ];
 
     function green(a) { return `rgba(0,128,0,${a})`; }
