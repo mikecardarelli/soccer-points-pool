@@ -80,3 +80,105 @@ footer {
   color: green;
   margin: 24px 24px;
 }
+
+.chart-hint {
+  margin-bottom: 12px;
+}
+
+.chart-wrapper {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  margin-bottom: 32px;
+}
+
+.chart-container {
+  flex: 1;
+  position: relative;
+  height: 78vh;
+  min-height: 500px;
+  min-width: 0;
+}
+
+.chart-legend {
+  width: 185px;
+  flex-shrink: 0;
+  max-height: 78vh;
+  overflow-y: auto;
+  border: 1.5px solid green;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.legend-section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.82em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: green;
+  padding: 4px 2px 3px;
+  border-bottom: 1px solid rgba(0,128,0,0.3);
+  margin-top: 8px;
+  margin-bottom: 3px;
+}
+
+.legend-col-label {
+  letter-spacing: 0.07em;
+}
+
+.legend-section-title:first-child {
+  margin-top: 0;
+}
+
+.legend-avg {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 2px 4px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78em;
+  color: green;
+  user-select: none;
+  transition: background-color 0.1s;
+}
+
+.legend-item:hover {
+  background-color: rgba(0,128,0,0.1);
+}
+
+.legend-item.active {
+  background-color: rgba(0,128,0,0.18);
+  font-weight: bold;
+}
+
+/* Slim green scrollbar for the legend */
+.chart-legend::-webkit-scrollbar {
+  width: 4px;
+}
+.chart-legend::-webkit-scrollbar-track {
+  background: transparent;
+}
+.chart-legend::-webkit-scrollbar-thumb {
+  background: rgba(0,128,0,0.3);
+  border-radius: 2px;
+}
+.chart-legend::-webkit-scrollbar-thumb:hover {
+  background: rgba(0,128,0,0.6);
+}
+
+/* Pointer cursor on chart canvas when hovering interactive elements */
+#allTimeChart {
+  cursor: default;
+}
+

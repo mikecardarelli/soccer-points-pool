@@ -12,6 +12,7 @@
 	<meta property="og:image:height" content="630" />
     <title>Soccer Points Pool</title>
     <link href="style.css" rel="stylesheet" type="text/css" media="all">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono&display=swap" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -29,10 +30,9 @@
   <h3>Complete Standings</h3>
     <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTO5srAa-jCVL1SPDblhlGIDBRHJhMTTkwtoy0r1qBbtQCFJ5mXIT3qP7FLhuS95y1rv-Z9xYmMrwK5/pubhtml?widget=true&amp;headers=false" width="1380px" height="675px"></iframe>
 
-  <h3>Winners 🏆</h3>
+  <h3>Winners</h3>
     <h4>Tier 1</h4>
     <ul>
-      <li>2025-26 - Seamus H. (346)</li>
       <li>2024-25 - Tom D. (357)</li>
       <li>2023-24 - Chris J. (341)</li>
       <li>2022-23 - Omar Z. (345)</li>
@@ -43,23 +43,314 @@
     <ul>
       <li>2019-20 - M. Carter (346)</li>
       <li>2018-19 - Andy M. (354)</li>
-      <li>2017-18 - Neil D. (???) ← EPL only</li>
+      <li>2017-18 - Neil D. (???) &lt;-- EPL only</li>
     </ul>
 
   <h2>Tier 2</h2>
 
-  <h3>Complete Standings</h3>
+  <h3>Standings</h3>
     <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQhfflmg9fRFJ5AoqNIaWVfFdppt8IsFbp-k-ejFCrWqY3pPDwD0s1tR_d2NBPbv7NmizY96RVeA-x6/pubhtml?widget=true&amp;headers=false" width="1380px" height="895px"></iframe>
 
-  <h3>Winners 🏆</h3>
+  <h3>Winners</h3>
     <ul>
-      <li>2025-26 - Greg C. (456)</li>
       <li>2024-25 - Pete B. (466)</li>
       <li>2023-24 - Matt C. (526)</li>
       <li>2022-23 - Seamus H. (472)</li>
-      <li>2021-22 - JD (398) ← No Turkish League yet</li>
-      <li>2020-21 - Chris J. (403) ← Tier 2 leagues only</li>
+      <li>2021-22 - JD (398) &lt;-- No Turkish League yet</li>
+      <li>2020-21 - Chris J. (403) &lt;-- Tier 2 leagues only</li>
     </ul>
+
+  <h2>All-Time Standings</h2>
+  <h3>Combined Historical Rankings</h3>
+  <p class="chart-hint">Hover a line or legend name to highlight. Click to lock the selection — click again to release.</p>
+
+  <div class="chart-wrapper">
+    <div class="chart-container">
+      <canvas id="trendsChart"></canvas>
+    </div>
+    <div class="chart-legend" id="chartLegend"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script>
+  (function () {
+    const SEASONS = ["'18-19","'19-20","'20-21","'21-22","'22-23","'23-24","'24-25","'25-26"];
+
+    const TIER1 = [
+      { name: 'Ted A.',        avg: 4.8,  ranks: [null,null,null,null,3,7,5,4] },
+      { name: 'Tom D.',        avg: 5.4,  ranks: [null,null,null,4,6,6,1,10] },
+      { name: 'Andy M.',       avg: 6.0,  ranks: [1,8,2,1,2,11,16,7] },
+      { name: 'Sam W.',        avg: 8.0,  ranks: [null,null,null,null,null,19,2,3] },
+      { name: 'Chris J.',      avg: 8.0,  ranks: [3,5,14,10,19,1,7,5] },
+      { name: 'M. Cardarelli', avg: 8.1,  ranks: [12,9,19,5,7,4,3,6] },
+      { name: 'Omar Z.',       avg: 9.3,  ranks: [4,6,7,3,1,9,28,16] },
+      { name: 'Jay M.',        avg: 9.9,  ranks: [6,3,1,2,13,28,15,11] },
+      { name: 'Seamus H.',     avg: 10.2, ranks: [null,null,11,26,14,3,6,1] },
+      { name: 'Neil D.',       avg: 10.5, ranks: [7,7,20,18,9,17,4,2] },
+      { name: 'M. Carter',     avg: 10.5, ranks: [11,1,5,11,17,5,9,25] },
+      { name: 'Moacir DSP',    avg: 12.2, ranks: [null,null,15,9,15,2,10,22] },
+      { name: 'George M.',     avg: 12.8, ranks: [9,4,16,6,5,12,26,24] },
+    ];
+
+    const TIER2 = [
+      { name: 'Pete B.',      avg: 13.4, ranks: [10,13,18,13,18,8,14,13] },
+      { name: 'JD',           avg: 13.8, ranks: [null,null,10,14,10,23,18,8] },
+      { name: 'Cullen B.',    avg: 15.0, ranks: [null,null,13,19,8,null,null,20] },
+      { name: 'Ben D.',       avg: 18.3, ranks: [null,null,null,null,null,26,17,12] },
+      { name: 'Mzati K.',     avg: 18.6, ranks: [null,null,null,8,27,30,19,9] },
+      { name: 'Mike R.',      avg: 18.7, ranks: [null,null,21,29,24,15,8,15] },
+      { name: 'Karl J.',      avg: 19.0, ranks: [null,null,null,null,null,16,12,29] },
+      { name: 'Greg C.',      avg: 19.3, ranks: [null,null,null,null,null,22,22,14] },
+      { name: 'Matt C.',      avg: 19.4, ranks: [null,null,null,24,22,14,11,26] },
+      { name: 'Joris R.',     avg: 19.5, ranks: [13,10,8,22,31,27,27,18] },
+      { name: 'Chris S.',     avg: 19.5, ranks: [null,null,9,28,16,13,30,21] },
+      { name: 'Kevin L.',     avg: 22.2, ranks: [null,null,null,20,28,20,20,23] },
+      { name: 'Alex FS',      avg: 22.5, ranks: [null,null,17,12,26,29,24,27] },
+      { name: 'Christina K.', avg: 23.0, ranks: [null,null,23,27,25,21,25,17] },
+      { name: 'Dave N.',      avg: 24.2, ranks: [null,null,null,31,23,25,23,19] },
+      { name: 'Ted H.',       avg: 26.6, ranks: [null,null,null,30,21,31,21,30] },
+      { name: 'Andy H.',      avg: 28.0, ranks: [null,null,null,null,null,null,null,28] },
+      { name: 'Aaron Z.',     avg: 31.0, ranks: [null,null,null,null,null,null,null,31] },
+    ];
+
+    function green(a) { return `rgba(0,128,0,${a})`; }
+
+    const allPlayers = [...TIER1, ...TIER2];
+
+    const A_DEFAULT = 0.28, A_SELECTED = 1.0, A_DIM = 0.06;
+    const W_DEFAULT = 1.5,  W_SELECTED = 3.5,  W_DIM = 1;
+
+    function isIsolated(ranks, i) {
+      if (ranks[i] === null) return false;
+      const prevNull = i === 0 || ranks[i - 1] === null;
+      const nextNull = i === ranks.length - 1 || ranks[i + 1] === null;
+      return prevNull && nextNull;
+    }
+
+    function pointRadii(ranks, normalR, isolatedR) {
+      return ranks.map((v, i) => v === null ? 0 : isIsolated(ranks, i) ? isolatedR : normalR);
+    }
+
+    function makeDataset(player) {
+      return {
+        label: player.name,
+        data: player.ranks,
+        borderColor: green(A_DEFAULT),
+        borderWidth: W_DEFAULT,
+        pointBackgroundColor: green(A_DEFAULT),
+        pointBorderColor: 'transparent',
+        pointRadius: pointRadii(player.ranks, 3, 3),
+        pointHoverRadius: pointRadii(player.ranks, 5, 9),
+        spanGaps: false,
+        tension: 0,
+        fill: false,
+        _ranks: player.ranks,
+      };
+    }
+
+    let lockedIdx = null;
+
+    function applyHighlight(chart, idx) {
+      chart.data.datasets.forEach((ds, i) => {
+        if (idx === null) {
+          ds.borderColor = green(A_DEFAULT);
+          ds.borderWidth = W_DEFAULT;
+          ds.pointBackgroundColor = green(A_DEFAULT);
+          ds.pointRadius = pointRadii(ds._ranks, 3, 3);
+        } else if (i === idx) {
+          ds.borderColor = green(A_SELECTED);
+          ds.borderWidth = W_SELECTED;
+          ds.pointBackgroundColor = green(A_SELECTED);
+          ds.pointRadius = pointRadii(ds._ranks, 5, 9);
+        } else {
+          ds.borderColor = green(A_DIM);
+          ds.borderWidth = W_DIM;
+          ds.pointBackgroundColor = green(A_DIM);
+          ds.pointRadius = pointRadii(ds._ranks, 2, 2);
+        }
+      });
+      chart.update('none');
+    }
+
+    function setLegendActive(idx) {
+      document.querySelectorAll('.legend-item').forEach(el => {
+        el.classList.toggle('active', parseInt(el.dataset.idx) === idx);
+      });
+    }
+
+    const tierBoundaryPlugin = {
+      id: 'tierBoundary',
+      afterDraw(chart) {
+        const { ctx, chartArea, scales } = chart;
+        const y = scales.y.getPixelForValue(13.5);
+        ctx.save();
+        ctx.beginPath();
+        ctx.setLineDash([6, 4]);
+        ctx.moveTo(chartArea.left, y);
+        ctx.lineTo(chartArea.right, y);
+        ctx.strokeStyle = 'rgba(0,128,0,0.4)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.font = '10px helvetica, arial';
+        ctx.fillStyle = 'rgba(0,128,0,0.65)';
+        ctx.textAlign = 'left';
+        ctx.fillText('Tier 1 ↑', chartArea.left + 4, y - 5);
+        ctx.fillText('Tier 2 ↓', chartArea.left + 4, y + 13);
+        ctx.restore();
+      }
+    };
+
+    const ctx = document.getElementById('trendsChart').getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'line',
+      plugins: [tierBoundaryPlugin],
+      data: {
+        labels: SEASONS,
+        datasets: allPlayers.map(makeDataset),
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'nearest', axis: 'xy', intersect: false },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: 'white',
+            borderColor: 'green',
+            borderWidth: 1,
+            titleColor: 'green',
+            bodyColor: 'green',
+            titleFont: { family: 'helvetica, arial', weight: 'bold', size: 13 },
+            bodyFont: { family: 'helvetica, arial', size: 12 },
+            padding: 10,
+            displayColors: false,
+            callbacks: {
+              title: (items) => items[0].dataset.label,
+              label: (item) => `${item.label}: rank ${item.raw}`,
+            },
+            filter: (item) => item.raw !== null,
+          },
+        },
+        scales: {
+          x: {
+            grid: { color: 'rgba(0,128,0,0.1)' },
+            ticks: {
+              color: (ctx) => ctx.tick.label === "'25-26" ? 'green' : 'rgba(0,128,0,0.55)',
+              font: (ctx) => ({
+                family: 'helvetica, arial',
+                size: 12,
+                weight: ctx.tick.label === "'25-26" ? 'bold' : 'normal',
+              }),
+            },
+          },
+          y: {
+            reverse: true,
+            min: 0,
+            max: 32,
+            ticks: {
+              stepSize: 1,
+              color: 'green',
+              font: { family: 'helvetica, arial', size: 11 },
+              callback: (val) => (val === 1 || (val % 5 === 0 && val > 0)) ? val : null,
+            },
+            grid: {
+              color: (context) => {
+                const v = context.tick.value;
+                return (v === 1 || v % 5 === 0) ? 'rgba(0,128,0,0.15)' : 'rgba(0,128,0,0.04)';
+              },
+            },
+            title: {
+              display: true,
+              text: 'Rank (lower = better)',
+              color: 'green',
+              font: { family: 'helvetica, arial', size: 12 },
+            },
+          },
+        },
+        onHover: (event, elements) => {
+          if (event.native) {
+            event.native.target.style.cursor = elements.length > 0 ? 'pointer' : 'default';
+          }
+          if (lockedIdx !== null) return;
+          if (elements.length > 0) {
+            const idx = elements[0].datasetIndex;
+            applyHighlight(chart, idx);
+            setLegendActive(idx);
+          } else {
+            applyHighlight(chart, null);
+            setLegendActive(null);
+          }
+        },
+        onClick: (event, elements) => {
+          if (elements.length > 0) {
+            const idx = elements[0].datasetIndex;
+            if (lockedIdx === idx) {
+              lockedIdx = null;
+              applyHighlight(chart, null);
+              setLegendActive(null);
+            } else {
+              lockedIdx = idx;
+              applyHighlight(chart, idx);
+              setLegendActive(idx);
+            }
+          } else {
+            lockedIdx = null;
+            applyHighlight(chart, null);
+            setLegendActive(null);
+          }
+        },
+      },
+    });
+
+    // Build sidebar legend
+    const legendEl = document.getElementById('chartLegend');
+    const legendTitle = document.createElement('div');
+    legendTitle.className = 'legend-section-title';
+    legendTitle.innerHTML = '<span>Entrant</span><span class="legend-col-label">avg rank</span>';
+    legendEl.appendChild(legendTitle);
+
+    allPlayers.forEach((p, dsIdx) => {
+      const item = document.createElement('div');
+      item.className = 'legend-item';
+      item.dataset.idx = dsIdx;
+
+      const lbl = document.createElement('span');
+      lbl.textContent = p.name;
+
+      const avg = document.createElement('span');
+      avg.className = 'legend-avg';
+      avg.textContent = p.avg.toFixed(1);
+
+      item.appendChild(lbl);
+      item.appendChild(avg);
+
+      item.addEventListener('mouseenter', () => {
+        if (lockedIdx !== null) return;
+        applyHighlight(chart, dsIdx);
+        setLegendActive(dsIdx);
+      });
+      item.addEventListener('mouseleave', () => {
+        if (lockedIdx !== null) return;
+        applyHighlight(chart, null);
+        setLegendActive(null);
+      });
+      item.addEventListener('click', () => {
+        if (lockedIdx === dsIdx) {
+          lockedIdx = null;
+          applyHighlight(chart, null);
+          setLegendActive(null);
+        } else {
+          lockedIdx = dsIdx;
+          applyHighlight(chart, dsIdx);
+          setLegendActive(dsIdx);
+        }
+      });
+
+      legendEl.appendChild(item);
+    });
+  })();
+  </script>
 
   <h2>Rules</h2>
     <p>Want to start your own pool? Here are the full rules:</p>
