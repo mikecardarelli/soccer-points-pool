@@ -192,11 +192,11 @@
         ctx.lineWidth = 1.5;
         ctx.stroke();
         ctx.setLineDash([]);
-        ctx.font = '10px helvetica, arial';
-        ctx.fillStyle = 'rgba(0,128,0,0.65)';
+        ctx.font = 'bold 12px helvetica, arial';
+        ctx.fillStyle = 'green';
         ctx.textAlign = 'left';
-        ctx.fillText('Tier 1 ↑', chartArea.left + 4, y - 5);
-        ctx.fillText('Tier 2 ↓', chartArea.left + 4, y + 13);
+        ctx.fillText('Tier 1 ↑', chartArea.left + 4, y - 6);
+        ctx.fillText('Tier 2 ↓', chartArea.left + 4, y + 16);
         ctx.restore();
       }
     };
