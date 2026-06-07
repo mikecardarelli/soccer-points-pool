@@ -235,14 +235,7 @@
         scales: {
           x: {
             grid: { color: 'rgba(0,128,0,0.1)' },
-            ticks: {
-              color: (ctx) => ctx.tick.label === "'25-26" ? 'green' : 'rgba(0,128,0,0.55)',
-              font: (ctx) => ({
-                family: 'helvetica, arial',
-                size: 12,
-                weight: ctx.tick.label === "'25-26" ? 'bold' : 'normal',
-              }),
-            },
+            ticks: { color: 'green', font: { family: 'helvetica, arial', size: 12 } },
           },
           y: {
             reverse: true,
