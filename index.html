@@ -206,11 +206,11 @@
         ctx.fillText('Tier 2 ↓', chartArea.left + 4, yTier + 16);
 
         // Relegation line (7/8 boundary)
-        const yRel = drawLine(7.5, 'rgba(0,128,0,0.25)', 1);
+        const yRel = drawLine(7.5, 'rgba(0,128,0,0.4)', 1.5);
         ctx.fillText('Relegation ↓', chartArea.left + 4, yRel + 16);
 
         // Promotion line (19/20 boundary)
-        const yPro = drawLine(19.5, 'rgba(0,128,0,0.25)', 1);
+        const yPro = drawLine(19.5, 'rgba(0,128,0,0.4)', 1.5);
         ctx.fillText('Promotion ↑', chartArea.left + 4, yPro - 6);
 
         ctx.restore();
