@@ -181,21 +181,38 @@
       id: 'tierBoundary',
       afterDraw(chart) {
         const { ctx, chartArea, scales } = chart;
-        const y = scales.y.getPixelForValue(13.5);
         ctx.save();
-        ctx.beginPath();
-        ctx.setLineDash([6, 4]);
-        ctx.moveTo(chartArea.left, y);
-        ctx.lineTo(chartArea.right, y);
-        ctx.strokeStyle = 'rgba(0,128,0,0.4)';
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-        ctx.setLineDash([]);
         ctx.font = 'bold 12px helvetica, arial';
         ctx.fillStyle = 'green';
         ctx.textAlign = 'left';
-        ctx.fillText('Tier 1 ↑', chartArea.left + 4, y - 6);
-        ctx.fillText('Tier 2 ↓', chartArea.left + 4, y + 16);
+
+        // Helper to draw a dashed horizontal line
+        function drawLine(value, strokeStyle, lineWidth) {
+          const y = scales.y.getPixelForValue(value);
+          ctx.beginPath();
+          ctx.setLineDash([6, 4]);
+          ctx.moveTo(chartArea.left, y);
+          ctx.lineTo(chartArea.right, y);
+          ctx.strokeStyle = strokeStyle;
+          ctx.lineWidth = lineWidth;
+          ctx.stroke();
+          ctx.setLineDash([]);
+          return y;
+        }
+
+        // Tier 1 / Tier 2 boundary
+        const yTier = drawLine(13.5, 'rgba(0,128,0,0.4)', 1.5);
+        ctx.fillText('Tier 1 ↑', chartArea.left + 4, yTier - 6);
+        ctx.fillText('Tier 2 ↓', chartArea.left + 4, yTier + 16);
+
+        // Relegation line (7/8 boundary)
+        const yRel = drawLine(7.5, 'rgba(0,128,0,0.25)', 1);
+        ctx.fillText('Relegation ↓', chartArea.left + 4, yRel + 16);
+
+        // Promotion line (19/20 boundary)
+        const yPro = drawLine(19.5, 'rgba(0,128,0,0.25)', 1);
+        ctx.fillText('Promotion ↑', chartArea.left + 4, yPro - 6);
+
         ctx.restore();
       }
     };
